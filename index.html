@@ -22,23 +22,20 @@
             padding: 20px;
         }
 
-        /* Layout em Grid/Flex para acomodar o Avatar + Card Principal */
         .page-wrapper {
             display: flex;
-            flex-direction: row;
-            align-items: flex-end;
-            gap: 25px;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
             max-width: 950px;
             width: 100%;
         }
 
-        /* Área do Instrutor / Avatar Lateral */
         .instructor-panel {
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 240px;
-            flex-shrink: 0;
+            width: 100%;
             position: relative;
         }
 
@@ -55,9 +52,9 @@
             text-align: center;
             line-height: 1.4;
             transition: all 0.3s ease;
+            max-width: 300px;
         }
 
-        /* Seta do balão de fala apontando para baixo */
         .speech-bubble::after {
             content: '';
             position: absolute;
@@ -86,11 +83,10 @@
             background: #18181c;
         }
 
-        /* Container Principal */
         .container {
-            flex: 1;
+            width: 100%;
             background: #141418;
-            padding: 40px;
+            padding: 30px;
             border-radius: 24px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
             border: 1px solid #282830;
@@ -114,6 +110,7 @@
             background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         p.subtitle {
@@ -122,24 +119,24 @@
             margin-bottom: 25px;
         }
 
-        /* Navegação por Botões (Abas) */
         .nav-buttons {
             display: flex;
             gap: 10px;
             margin-bottom: 25px;
             flex-wrap: wrap;
+            justify-content: center;
         }
 
         .tab-btn {
             flex: 1;
-            min-width: 110px;
+            min-width: 100px;
             background: #1f1f26;
             border: 1px solid #2e2e38;
             color: #a0a0ab;
-            padding: 12px 10px;
+            padding: 12px 8px;
             border-radius: 10px;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             cursor: pointer;
             transition: all 0.3s ease;
             text-align: center;
@@ -148,6 +145,7 @@
         .tab-btn:hover {
             background: #282833;
             color: #ffffff;
+            border-color: #e6683c;
         }
 
         .tab-btn.active {
@@ -157,11 +155,10 @@
             box-shadow: 0 4px 15px rgba(220, 39, 67, 0.3);
         }
 
-        /* Conteúdo Dinâmico das Abas */
         .tab-content {
             display: none;
             background: #1a1a20;
-            padding: 22px;
+            padding: 20px;
             border-radius: 14px;
             border: 1px solid #2a2a35;
             margin-bottom: 25px;
@@ -174,7 +171,7 @@
         }
 
         .tab-content h3 {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: #fff;
             margin-bottom: 10px;
             display: flex;
@@ -197,7 +194,7 @@
         .tab-content ul li {
             color: #c5c5d0;
             font-size: 0.88rem;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -207,9 +204,9 @@
             content: "✓";
             color: #e6683c;
             font-weight: bold;
+            font-size: 1.1rem;
         }
 
-        /* Botão Principal */
         .cta-button {
             display: flex;
             align-items: center;
@@ -224,6 +221,8 @@
             font-size: 1.05rem;
             transition: transform 0.2s, box-shadow 0.2s;
             width: 100%;
+            border: none;
+            cursor: pointer;
         }
 
         .cta-button:hover {
@@ -232,7 +231,7 @@
         }
 
         footer {
-            margin-top: 25px;
+            margin-top: 20px;
             font-size: 0.8rem;
             color: #50505a;
             text-align: center;
@@ -243,30 +242,33 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Adaptabilidade Mobile */
-        @media (max-width: 768px) {
-            .page-wrapper {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .instructor-panel {
-                width: 100%;
-                margin-bottom: 10px;
-            }
-
-            .avatar-img {
-                width: 100px;
-                height: 100px;
-            }
-
+        @media (max-width: 480px) {
             .container {
-                padding: 25px 20px;
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
             }
 
             .nav-buttons {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+
+            .tab-btn {
+                min-width: 85px;
+                font-size: 0.8rem;
+                padding: 10px 6px;
+            }
+
+            .avatar-img {
+                width: 120px;
+                height: 120px;
+            }
+
+            .speech-bubble {
+                font-size: 0.8rem;
+                padding: 12px;
             }
         }
     </style>
@@ -279,7 +281,6 @@
             <div class="speech-bubble" id="instructorBubble">
                 Seja bem-vindo! Clique nos botões ao lado para explorar meu trabalho. 🚀
             </div>
-            <!-- Substitua o src pela URL da foto do seu avatar/personagem -->
             <img src="https://api.dicebear.com/7.x/bottts/svg?seed=lukin01lk" alt="Avatar Instrutor" class="avatar-img" id="avatarImg">
         </div>
 
@@ -352,19 +353,15 @@
     <!-- Script de Alternância Interativa -->
     <script>
         function openTab(tabName, btnElement, instructorText) {
-            // Esconde todas as abas
             const contents = document.querySelectorAll('.tab-content');
             contents.forEach(content => content.classList.remove('active'));
 
-            // Remove classe ativa de todos os botões
             const buttons = document.querySelectorAll('.tab-btn');
             buttons.forEach(button => button.classList.remove('active'));
 
-            // Exibe a aba clicada e ativa o botão
             document.getElementById(tabName).classList.add('active');
             btnElement.classList.add('active');
 
-            // Atualiza a mensagem do Avatar Instrutor
             document.getElementById('instructorBubble').innerHTML = instructorText;
         }
     </script>
